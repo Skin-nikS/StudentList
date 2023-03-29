@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
+using System.Runtime.Intrinsics.Arm;
 
+
+///Напишите метод, который соберет всех учеников всех классов в один список, используя LINQ.
 namespace Task1
 {
     class Program
@@ -10,7 +14,7 @@ namespace Task1
         {
             var classes = new[]
             {
-               new Classroom { Students = {"Evgeniy", "Sergey", "Andrew"}, },
+               new Classroom { Students = {"Evgeniy", "Sergey", "Andrew" },  },
                new Classroom { Students = {"Anna", "Viktor", "Vladimir"}, },
                new Classroom { Students = {"Bulat", "Alex", "Galina"}, }
            };
@@ -21,7 +25,18 @@ namespace Task1
 
         static string[] GetAllStudents(Classroom[] classes)
         {
-            // ???
+            var NameStudents = from student in classes
+                               join st in classes on classroom.Stu equals st.Students
+                               select new // выборка в новую сущность
+                               {
+                                   ClassroomStudent = st.Student
+                                  
+                               };// соединим по общему ключу (имя производителя) с производителями
+
+            Console.WriteLine(NameStudents);
+            foreach (var student in NameStudents)
+                Console.WriteLine(student);
+            
         }
 
         public class Classroom
